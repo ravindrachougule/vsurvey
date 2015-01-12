@@ -1,18 +1,18 @@
 package com.bmc.traffic;
 
-public class ABPassedState implements MonitorState
+public class FrontAxelPassedBothSensorsState implements MonitorState
 {
 	public Monitor monitor;
 
 	
-	ABPassedState(Monitor monitor)
+	FrontAxelPassedBothSensorsState(Monitor monitor)
 	{
 		this.monitor = monitor;
 	}
 
 	public void processSenorAEntry()
 	{
-		monitor.setState(monitor.getAbaPassedState());
+		monitor.setState(monitor.getRearAxelPassedFirstSensorState());
 
 	}
 

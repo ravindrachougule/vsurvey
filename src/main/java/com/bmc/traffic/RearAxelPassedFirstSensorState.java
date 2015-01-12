@@ -1,11 +1,11 @@
 package com.bmc.traffic;
 
-public class ABAPassedState implements MonitorState
+public class RearAxelPassedFirstSensorState implements MonitorState
 {
 	public Monitor monitor;
 
 	
-	ABAPassedState(Monitor monitor)
+	RearAxelPassedFirstSensorState(Monitor monitor)
 	{
 		this.monitor = monitor;
 	}
@@ -18,7 +18,7 @@ public class ABAPassedState implements MonitorState
 
 	public void processSenorBEntry()
 	{
-		monitor.setState(monitor.getNoCarYetPassedState());
+		monitor.setState(monitor.getInitialState());
 		monitor.recordCarEntry(Direction.SouthBound);
 
 	}

@@ -8,13 +8,13 @@ public class Monitor
 	List <Record> recordEntries = new ArrayList<Record>();
 	List <CarEntry> carEntries = new ArrayList<CarEntry>();
 
-	MonitorState noCarYetPassedState = new NoCarYetPassedState(this);
-	MonitorState aPassedState = new APassedState(this);
-	MonitorState abPassedState = new ABPassedState(this);
-	MonitorState abaPassedState = new ABAPassedState(this);
+	MonitorState initialState = new InitialState(this);
+	MonitorState frontAxelPassedState = new FrontAxelPassedState(this);
+	MonitorState frontAxelPassedBothSensorsState = new FrontAxelPassedBothSensorsState(this);
+	MonitorState rearAxelPassedFirstSensorState = new RearAxelPassedFirstSensorState(this);
 
 
-	MonitorState state = new NoCarYetPassedState(this);
+	MonitorState state = new InitialState(this);
 
 
 	public List<Record> getRecordEntries()
@@ -34,33 +34,33 @@ public class Monitor
 		this.state = state;
 	}
 
-	public MonitorState getNoCarYetPassedState()
+	public MonitorState getInitialState()
 	{
-		return noCarYetPassedState;
+		return initialState;
 	}
 
 
-	public MonitorState getaPassedState()
+	public MonitorState getFrontAxelPassedState()
 	{
-		return aPassedState;
+		return frontAxelPassedState;
 	}
 
 
-	public MonitorState getAbPassedState()
+	public MonitorState getFrontAxelPassedBothSensorsState()
 	{
-		return abPassedState;
+		return frontAxelPassedBothSensorsState;
 	}
 
 
-	public MonitorState getAbaPassedState()
+	public MonitorState getRearAxelPassedFirstSensorState()
 	{
-		return abaPassedState;
+		return rearAxelPassedFirstSensorState;
 	}
 
 
 	public void setaPassedState(MonitorState aPassedState)
 	{
-		this.aPassedState = aPassedState;
+		this.frontAxelPassedState = aPassedState;
 	}
 
 

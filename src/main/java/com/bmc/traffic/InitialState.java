@@ -1,18 +1,18 @@
 package com.bmc.traffic;
 
-public class NoCarYetPassedState implements MonitorState
+public class InitialState implements MonitorState
 {
 	public Monitor monitor;
 
 	
-	NoCarYetPassedState(Monitor monitor)
+	InitialState(Monitor monitor)
 	{
 		this.monitor = monitor;
 	}
 
 	public void processSenorAEntry()
 	{
-		monitor.setState(monitor.getaPassedState());
+		monitor.setState(monitor.getFrontAxelPassedState());
 
 	}
 

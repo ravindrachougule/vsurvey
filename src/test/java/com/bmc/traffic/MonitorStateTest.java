@@ -17,13 +17,13 @@ public class MonitorStateTest
 		monitor.getState().processSenorAEntry();
 
 		//then
-		assertEquals(monitor.getaPassedState(), monitor.getState());
+		assertEquals(monitor.getFrontAxelPassedState(), monitor.getState());
 
 		//when
 		monitor.getState().processSenorAEntry();
 
 		//then
-		assertEquals(monitor.getNoCarYetPassedState(), monitor.getState());
+		assertEquals(monitor.getInitialState(), monitor.getState());
 
 	}
 	
@@ -37,13 +37,13 @@ public class MonitorStateTest
 		monitor.getState().processSenorAEntry();
 
 		//then
-		assertEquals(monitor.getaPassedState(), monitor.getState());
+		assertEquals(monitor.getFrontAxelPassedState(), monitor.getState());
 
 		//when
 		monitor.getState().processSenorBEntry();
 
 		//then
-		assertEquals(monitor.getAbPassedState(), monitor.getState());
+		assertEquals(monitor.getFrontAxelPassedBothSensorsState(), monitor.getState());
 		
 		
 		//AB-AB
@@ -51,13 +51,13 @@ public class MonitorStateTest
 		monitor.getState().processSenorAEntry();
 
 		//then
-		assertEquals(monitor.getAbaPassedState(), monitor.getState());
+		assertEquals(monitor.getRearAxelPassedFirstSensorState(), monitor.getState());
 
 		//when
 		monitor.getState().processSenorBEntry();
 
 		//then
-		assertEquals(monitor.getNoCarYetPassedState(), monitor.getState());
+		assertEquals(monitor.getInitialState(), monitor.getState());
 
 	}
 

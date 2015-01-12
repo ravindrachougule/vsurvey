@@ -10,7 +10,7 @@ public class MonitorTest
 {
 
 	@Test
-	public void testNorthBound()
+	public void testNorthBoundMovement()
 	{
 		//Given
 		Monitor monitor = new Monitor();
@@ -28,16 +28,30 @@ public class MonitorTest
 		monitor.process(recordAtwo);
 		
 		//then
-		assertEquals("Should be empty",carEntries.size(),1);
+		assertEquals(carEntries.size(),1);
 		CarEntry carEntry = carEntries.get(0);
 		assertEquals( Direction.NorthBound,carEntry.getDirection());
 		assertEquals(2, carEntry.getRecordEntries().size());
 		assertEquals("Should be empty",monitor.getRecordEntries().size(),0);
+		
+		
+		
+		
+		SpHuRtI  d
+		
+		
+		SPHURTI D
+		
+		sphurti d
+		
+		SPHURTI D
+		
+		sphurti d
 	}
 
 
 	@Test
-	public void testSouthBound()
+	public void testSouthBoundMovement()
 	{
 		//Given
 		Monitor monitor = new Monitor();
