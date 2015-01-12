@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Monitor
 {
+	private Record previousRecord;
+	int day = 1;
 	List <Record> recordEntries = new ArrayList<Record>();
 	List <CarEntry> carEntries = new ArrayList<CarEntry>();
 
@@ -66,9 +68,16 @@ public class Monitor
 
 	public void process(Record record)
 	{
-		recordEntries.add(record);
+		Record aRecord = record;
+		if( notTheFirstRecord() && record.crossedIntoNextDay(previousRecord))
+		{
+			day++;
+			aRecord = record.advanceFor(day);
+		}
+		
+		recordEntries.add(aRecord);
 
-		switch (record.getSensor())
+		switch (aRecord.getSensor())
 		{
 		case A:
 			state.processSenorAEntry();
@@ -78,6 +87,15 @@ public class Monitor
 			state.processSenorBEntry();
 			break;
 		}
+		
+		previousRecord = record;
+	}
+
+
+
+
+	private boolean notTheFirstRecord() {
+		return previousRecord!= null;
 	}
 
 

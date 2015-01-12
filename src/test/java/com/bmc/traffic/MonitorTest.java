@@ -34,7 +34,44 @@ public class MonitorTest
 		assertEquals(2, carEntry.getRecordEntries().size());
 		assertEquals("Should be empty",monitor.getRecordEntries().size(),0);
 		
-
+		//given another car
+		recordAOne = new Record(Sensor.A,499718);
+		recordAtwo = new Record(Sensor.A,499886);
+		
+		//when
+		monitor.process(recordAOne);
+		monitor.process(recordAtwo);
+		Interval morning = IntervalFactory.getMorning();
+		Interval evening = IntervalFactory.getEvening();
+		
+		//then
+		Analyser analyser = new Analyser(monitor.getCarEntries());
+		assertEquals(2,analyser.getCarEntries(morning,Direction.NorthBound).size());
+		assertEquals(0,analyser.getCarEntries(morning,Direction.SouthBound).size());
+		assertEquals(0,analyser.getCarEntries(evening,Direction.SouthBound).size());
+		
+		
+		//given we go into next day(Day 2).
+		recordAOne = new Record(Sensor.A,268981);
+		recordAtwo = new Record(Sensor.A,269123);
+		monitor.process(recordAOne);
+		monitor.process(recordAtwo);
+		
+		//then pass next day interval
+		assertEquals(1,analyser.getCarEntries(morning.advanceFor(2),Direction.NorthBound).size());
+		assertEquals(0,analyser.getCarEntries(morning.advanceFor(2),Direction.SouthBound).size());
+		assertEquals(0,analyser.getCarEntries(morning.advanceFor(2),Direction.SouthBound).size());
+		
+		
+		//given we got to third day
+		recordAOne = new Record(Sensor.A,2);
+		recordAtwo = new Record(Sensor.A,124);
+		monitor.process(recordAOne);
+		monitor.process(recordAtwo);
+		//then pass next day interval
+		assertEquals(1,analyser.getCarEntries(morning.advanceFor(3),Direction.NorthBound).size());
+		assertEquals(0,analyser.getCarEntries(morning.advanceFor(3),Direction.SouthBound).size());
+		assertEquals(0,analyser.getCarEntries(morning.advanceFor(3),Direction.SouthBound).size());
 	}
 
 

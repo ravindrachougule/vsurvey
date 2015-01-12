@@ -36,4 +36,17 @@ public class Record
 	}
 
 	
+	public Record advanceFor(int day) {
+		int aTimestamp = timestamp;
+		for (int i= 1; i<day;i++)
+		{
+			aTimestamp += IntervalFactory.midNight;
+		}
+		return new Record(sensor, aTimestamp);
+	}
+
+
+	public boolean crossedIntoNextDay(Record previousRecord) {
+		return getTimestamp() < previousRecord.getTimestamp();
+	}
 }
