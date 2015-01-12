@@ -34,19 +34,7 @@ public class MonitorTest
 		assertEquals(2, carEntry.getRecordEntries().size());
 		assertEquals("Should be empty",monitor.getRecordEntries().size(),0);
 		
-		
-		
-		
-		SpHuRtI  d
-		
-		
-		SPHURTI D
-		
-		sphurti d
-		
-		SPHURTI D
-		
-		sphurti d
+
 	}
 
 
