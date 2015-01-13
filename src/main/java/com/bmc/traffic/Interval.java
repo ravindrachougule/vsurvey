@@ -1,6 +1,8 @@
 package com.bmc.traffic;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Interval {
 
@@ -37,6 +39,43 @@ public class Interval {
 			aEndTime += IntervalFactory.midNight;
 		}
 		return new Interval(aStartTime, aEndTime);
+	}
+
+	public List<Interval> breakDownHourly()
+	{
+		int divideInto = 12;
+		List<Interval> result = new ArrayList<Interval>();
+		
+		int totalMilliSec = endTime - startTime;
+		
+		int interval = 3600000;
+		//divideInto = totalMilliSec/interval;
+		
+		int aStartTime = startTime;
+		for (int i = 1; i<=12;i++)
+		{
+			result.add(new Interval(aStartTime+1, aStartTime+interval));
+			aStartTime = aStartTime+interval ;
+		}
+		return result;
+	}
+
+	public List<Interval> breakDownHalf()
+	{
+		int divideInto = 2;
+		List<Interval> result = new ArrayList<Interval>();
+		
+		int totalMilliSec = endTime - startTime;
+		
+		int interval = totalMilliSec/divideInto;
+		
+		int aStartTime = startTime;
+		for (int i = 1; i<=2;i++)
+		{
+			result.add(new Interval(aStartTime+1, aStartTime+interval));
+			aStartTime = aStartTime+interval ;
+		}
+		return result;
 	}
 }
 
