@@ -41,6 +41,12 @@ public class CarEntry
 	{
 		return "CarEntry [direction=" + direction + ", recordEntries=" + recordEntries + "]";
 	}
+
+	public float distance(CarEntry carEntryOne) {
+		int timeDifferenceInMS = recordEntries.get(0).getTimestamp() - carEntryOne.getRecordEntries().get(0).getTimestamp();
+		
+		return timeDifferenceInMS /60;
+	}
 	
 	
 	

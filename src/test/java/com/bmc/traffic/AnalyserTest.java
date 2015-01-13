@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.junit.Test;
 
@@ -28,6 +29,8 @@ public class AnalyserTest
 		
 		//then
 		//A) Total Vehicle count in morning
+		System.out.println(" ------------------ ");
+		System.out.println(" Total Vehicle count in morning ");
 		
 		Interval morning = IntervalFactory.getMorning();
 		Interval interval = null;
@@ -45,6 +48,30 @@ public class AnalyserTest
 		
 		
 		}
+		System.out.println("\n \n");
+		
+		//B) Peak Volume
+		TreeSet<TrafficInterval> peakIntervals = analyser.getPeak(morning,IntervalFactory.hourInterval,Direction.NorthBound);
+		System.out.println("Peak at =" + peakIntervals.iterator().next() );
+		
+		//C) Distance between cars
+		
+		interval = IntervalFactory.getMorning();
+		float distanceInMeter = analyser.getAvgDistance(interval,Direction.NorthBound);
+		System.out.println("getAvgDistance (meters)= " + distanceInMeter );
+		assertTrue(distanceInMeter > 1);
+		
+		System.out.println(" ------------------ ");
+		
 	}
 
+	@Test
+	public void testTrafficInterval()
+	{
+		TrafficInterval intervalPeak = new TrafficInterval(new Interval(0, 1), 2);
+		TrafficInterval intervalFree = new TrafficInterval(new Interval(0, 1), 1);
+		assertTrue(intervalPeak.compareTo(intervalFree) < 0);
+		assertTrue(intervalFree.compareTo(intervalPeak) > 0);
+		assertTrue(intervalFree.compareTo(intervalFree) == 0);
+	}
 }

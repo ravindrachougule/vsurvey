@@ -30,16 +30,7 @@ public class IntervalTest {
 
 	}
 
-	@Test
-	public void testDistribution()
-	{
-		//given
-		List<CarEntry> carEntries = new ArrayList<CarEntry>();
 
-		List<Record> records = new ArrayList<Record>();
-		records.add(new Record(Sensor.A,268981));
-		carEntries.add(new CarEntry(Direction.NorthBound,records));
-	}
 
 	@Test
 	public void testWeekDayInterval()
