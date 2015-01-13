@@ -49,4 +49,35 @@ public class Record
 	public boolean crossedIntoNextDay(Record previousRecord) {
 		return getTimestamp() < previousRecord.getTimestamp();
 	}
+
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((sensor == null) ? 0 : sensor.hashCode());
+		result = prime * result + timestamp;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Record other = (Record) obj;
+		if (sensor != other.sensor)
+			return false;
+		if (timestamp != other.timestamp)
+			return false;
+		return true;
+	}
+	
+	
 }

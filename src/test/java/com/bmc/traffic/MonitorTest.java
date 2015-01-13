@@ -72,6 +72,20 @@ public class MonitorTest
 		assertEquals(1,analyser.getCarEntries(morning.advanceFor(3),Direction.NorthBound).size());
 		assertEquals(0,analyser.getCarEntries(morning.advanceFor(3),Direction.SouthBound).size());
 		assertEquals(0,analyser.getCarEntries(morning.advanceFor(3),Direction.SouthBound).size());
+		
+		//test Analyser out put
+		List<Interval>twentyMinInterval = morning.breakDown(IntervalFactory.twentyMinInterval);
+		
+		for (Interval interval : twentyMinInterval){
+			carEntries = analyser.getCarEntries(interval,Direction.NorthBound);
+			if (!carEntries.isEmpty())
+			System.out.println("interval: " + interval + " : [" + carEntries.size()  + "]"+carEntries  + " : " + Direction.NorthBound);
+			
+			carEntries = analyser.getCarEntries(interval,Direction.SouthBound);
+			if (!carEntries.isEmpty())
+			System.out.println("interval: " + interval + " : [" + carEntries.size()  + "]"+carEntries  + " : " + Direction.SouthBound);
+			
+		}
 	}
 
 

@@ -41,42 +41,27 @@ public class Interval {
 		return new Interval(aStartTime, aEndTime);
 	}
 
-	public List<Interval> breakDownHourly()
+	public List<Interval> breakDown(int interval)
 	{
-		int divideInto = 12;
+		int aStartTime = startTime;
 		List<Interval> result = new ArrayList<Interval>();
 		
-		int totalMilliSec = endTime - startTime;
-		
-		int interval = 3600000;
-		//divideInto = totalMilliSec/interval;
-		
-		int aStartTime = startTime;
-		for (int i = 1; i<=12;i++)
+		while (aStartTime + interval <= endTime)
 		{
-			result.add(new Interval(aStartTime+1, aStartTime+interval));
-			aStartTime = aStartTime+interval ;
+			result.add(new Interval(aStartTime, aStartTime + interval));
+			aStartTime += interval  ;
 		}
 		return result;
 	}
 
-	public List<Interval> breakDownHalf()
+	@Override
+	public String toString()
 	{
-		int divideInto = 2;
-		List<Interval> result = new ArrayList<Interval>();
-		
-		int totalMilliSec = endTime - startTime;
-		
-		int interval = totalMilliSec/divideInto;
-		
-		int aStartTime = startTime;
-		for (int i = 1; i<=2;i++)
-		{
-			result.add(new Interval(aStartTime+1, aStartTime+interval));
-			aStartTime = aStartTime+interval ;
-		}
-		return result;
+		return "Interval [startTime=" + startTime + ", endTime=" + endTime + "]";
 	}
+	
+	
+
 }
 
 

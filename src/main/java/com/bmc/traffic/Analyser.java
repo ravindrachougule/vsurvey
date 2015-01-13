@@ -11,12 +11,12 @@ public class Analyser {
 	}
 
 	
-	public List<CarEntry> getCarEntries(Interval morning, Direction direction) {
+	public List<CarEntry> getCarEntries(Interval interval, Direction direction) {
 
 		List<CarEntry> result = new ArrayList<CarEntry>(); 
 		for (CarEntry entry : carEntries)
 		{
-			if (morning.contains(entry.recordEntries.get(0).getTimestamp()) && entry.direction.equals(direction))
+			if (interval.contains(entry.recordEntries.get(0).getTimestamp()) && entry.direction.equals(direction))
 				result.add(entry);
 			}
 

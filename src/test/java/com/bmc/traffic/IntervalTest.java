@@ -58,25 +58,32 @@ public class IntervalTest {
 		//given
 		Interval morning = IntervalFactory.getMorning();
 
-
 		//when
-		List<Interval>hourlyIntervals = morning.breakDownHourly();
+		List<Interval>hourlyIntervals = morning.breakDown(IntervalFactory.hourInterval);
 
 		assertEquals(12, hourlyIntervals.size());
 		Interval firstHour = hourlyIntervals.get(0);
 		assertTrue(hourlyIntervals.get(0).contains(IntervalTest.OneHour));
 		assertFalse(hourlyIntervals.get(0).contains(IntervalTest.OneHour+1));
 
-		assertFalse(hourlyIntervals.get(3).contains(IntervalTest.OneHour*3));
+		assertFalse(hourlyIntervals.get(3).contains(IntervalTest.OneHour*3-1));
 		assertTrue(hourlyIntervals.get(3).contains(IntervalTest.OneHour*3+1));
 		assertTrue(hourlyIntervals.get(3).contains(IntervalTest.OneHour*4));
 		assertFalse(hourlyIntervals.get(3).contains(IntervalTest.OneHour*4+1));
 
-		List<Interval>halfHourly = firstHour.breakDownHalf();
+		List<Interval>halfHourly = firstHour.breakDown(IntervalFactory.halfHourInterval);
 		assertEquals(2, halfHourly.size());
 		assertTrue(halfHourly.get(0).contains(IntervalTest.HalfHour));
 		assertFalse(halfHourly.get(0).contains(IntervalTest.HalfHour+1));
 		assertTrue(halfHourly.get(1).contains(IntervalTest.OneHour-1));
 		assertFalse(halfHourly.get(1).contains(IntervalTest.OneHour+1));
+		
+		List<Interval>twentyMinInterval = firstHour.breakDown(IntervalFactory.twentyMinInterval);
+		assertEquals(3, twentyMinInterval.size());
+		assertTrue(twentyMinInterval.get(0).contains(IntervalFactory.twentyMinInterval-1));
+		assertFalse(twentyMinInterval.get(0).contains(IntervalFactory.twentyMinInterval+1));
+		assertTrue(twentyMinInterval.get(1).contains(IntervalFactory.twentyMinInterval+1));
+		
+		
 	}
 }

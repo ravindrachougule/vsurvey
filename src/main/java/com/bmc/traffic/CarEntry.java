@@ -35,6 +35,13 @@ public class CarEntry
 	{
 		this.direction = direction;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "CarEntry [direction=" + direction + ", recordEntries=" + recordEntries + "]";
+	}
+	
 	
 	
 }
