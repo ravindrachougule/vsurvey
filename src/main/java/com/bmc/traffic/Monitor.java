@@ -12,8 +12,11 @@ import com.bmc.traffic.reference.Direction;
 
 public class Monitor implements MonitorState
 {
-	private Record previousRecord;
+
 	int day = 1;
+	MonitorState state = new InitialState(this);
+	private Record previousRecord;
+	
 	List <Record> recordEntries = new ArrayList<Record>();
 	List <CarEntry> carEntries = new ArrayList<CarEntry>();
 
@@ -23,8 +26,20 @@ public class Monitor implements MonitorState
 	MonitorState rearAxelPassedFirstSensorState = new RearAxelPassedFirstSensorState(this);
 
 
-	MonitorState state = new InitialState(this);
 
+	public void process(Record record)
+	{
+		if( aNewDay(record))
+		{
+			day++;
+		}
+		
+		recordEntries.add(record.advanceFor(day));
+
+		changeState(record);
+		
+		previousRecord = record;
+	}
 
 	public List<Record> getRecordEntries()
 	{
@@ -83,16 +98,7 @@ public class Monitor implements MonitorState
 	}
 
 
-	public void process(Record record)
-	{
-		Record aRecord = record;
-		if( notTheFirstRecord() && record.crossedIntoNextDay(previousRecord))
-		{
-			day++;
-		}
-		
-		recordEntries.add(record.advanceFor(day));
-
+	private void changeState(Record record) {
 		switch (record.getSensor())
 		{
 		case A:
@@ -103,12 +109,11 @@ public class Monitor implements MonitorState
 			state.processSenorBEntry();
 			break;
 		}
-		
-		previousRecord = record;
 	}
 
-
-
+	private boolean aNewDay(Record record) {
+		return notTheFirstRecord() && record.crossedIntoNextDay(previousRecord);
+	}
 
 	private boolean notTheFirstRecord() {
 		return previousRecord!= null;

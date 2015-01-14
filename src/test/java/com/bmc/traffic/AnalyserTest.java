@@ -18,7 +18,7 @@ public class AnalyserTest
 {
 
 	@Test
-	public void test() throws IOException
+	public void testSimulation() throws IOException
 	{
 		Monitor monitor = new Monitor();
 
