@@ -1,8 +1,10 @@
-package com.bmc.traffic;
+package com.bmc.traffic.monitorState;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.bmc.traffic.Monitor;
 
 public class MonitorStateTest
 {
@@ -14,13 +16,13 @@ public class MonitorStateTest
 		Monitor monitor = new Monitor();
 
 		//when
-		monitor.getState().processSenorAEntry();
+		monitor.processSenorAEntry();
 
 		//then
 		assertEquals(monitor.getFrontAxelPassedState(), monitor.getState());
 
 		//when
-		monitor.getState().processSenorAEntry();
+		monitor.processSenorAEntry();
 
 		//then
 		assertEquals(monitor.getInitialState(), monitor.getState());
@@ -34,13 +36,13 @@ public class MonitorStateTest
 		Monitor monitor = new Monitor();
 
 		//when
-		monitor.getState().processSenorAEntry();
+		monitor.processSenorAEntry();
 
 		//then
 		assertEquals(monitor.getFrontAxelPassedState(), monitor.getState());
 
 		//when
-		monitor.getState().processSenorBEntry();
+		monitor.processSenorBEntry();
 
 		//then
 		assertEquals(monitor.getFrontAxelPassedBothSensorsState(), monitor.getState());
@@ -48,19 +50,22 @@ public class MonitorStateTest
 		
 		//AB-AB
 		//when
-		monitor.getState().processSenorAEntry();
+		monitor.processSenorAEntry();
 
 		//then
 		assertEquals(monitor.getRearAxelPassedFirstSensorState(), monitor.getState());
 
 		//when
-		monitor.getState().processSenorBEntry();
+		monitor.processSenorBEntry();
 
 		//then
 		assertEquals(monitor.getInitialState(), monitor.getState());
 
 	}
 
+	/**
+	 * Does not support if two cars travel over the sensors and sequence get interlaced.
+	 */
 	@Test
 	public void testFirstEntryB_INVALID()
 	{
@@ -69,13 +74,12 @@ public class MonitorStateTest
 
 		//when
 		try{
-		monitor.getState().processSenorBEntry();
+		monitor.processSenorBEntry();
 		fail("Should throw error");
 		}
 		catch(RuntimeException r){
 			
 		}
-		//then
 	}
 	
 	
@@ -84,18 +88,17 @@ public class MonitorStateTest
 	{
 		//Given
 		Monitor monitor = new Monitor();
-		monitor.getState().processSenorAEntry();
-		monitor.getState().processSenorBEntry();
+		monitor.processSenorAEntry();
+		monitor.processSenorBEntry();
 		
 		//when
 		try{
-		monitor.getState().processSenorBEntry();
+		monitor.processSenorBEntry();
 		fail("Should throw error");
 		}
 		catch(RuntimeException r){
 			
 		}
-		//then
 	}
 	
 	@Test
@@ -103,18 +106,17 @@ public class MonitorStateTest
 	{
 		//Given
 		Monitor monitor = new Monitor();
-		monitor.getState().processSenorAEntry();
-		monitor.getState().processSenorBEntry();
-		monitor.getState().processSenorAEntry();
+		monitor.processSenorAEntry();
+		monitor.processSenorBEntry();
+		monitor.processSenorAEntry();
 		
 		//when
 		try{
-		monitor.getState().processSenorAEntry();
+		monitor.processSenorAEntry();
 		fail("Should throw error");
 		}
 		catch(RuntimeException r){
 			
 		}
-		//then
 	}
 }

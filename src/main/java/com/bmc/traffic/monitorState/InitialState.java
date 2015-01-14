@@ -1,11 +1,13 @@
-package com.bmc.traffic;
+package com.bmc.traffic.monitorState;
+
+import com.bmc.traffic.Monitor;
 
 public class InitialState implements MonitorState
 {
 	public Monitor monitor;
 
 	
-	InitialState(Monitor monitor)
+	public InitialState(Monitor monitor)
 	{
 		this.monitor = monitor;
 	}
@@ -19,7 +21,6 @@ public class InitialState implements MonitorState
 	public void processSenorBEntry()
 	{
 		throw new RuntimeException("Cannot Support first Entry of B");
-		//monitor.setState(monitor.getAbPassedState());
 
 	}
 

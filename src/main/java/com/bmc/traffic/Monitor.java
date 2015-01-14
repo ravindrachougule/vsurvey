@@ -3,7 +3,14 @@ package com.bmc.traffic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Monitor
+import com.bmc.traffic.monitorState.FrontAxelPassedBothSensorsState;
+import com.bmc.traffic.monitorState.FrontAxelPassedState;
+import com.bmc.traffic.monitorState.InitialState;
+import com.bmc.traffic.monitorState.MonitorState;
+import com.bmc.traffic.monitorState.RearAxelPassedFirstSensorState;
+import com.bmc.traffic.reference.Direction;
+
+public class Monitor implements MonitorState
 {
 	private Record previousRecord;
 	int day = 1;
@@ -24,6 +31,16 @@ public class Monitor
 		return recordEntries;
 	}
 
+	public void processSenorAEntry()
+	{
+		getState().processSenorAEntry();
+
+	}
+
+	public void processSenorBEntry()
+	{
+		getState().processSenorBEntry();
+	}
 
 	public MonitorState getState()
 	{
@@ -72,12 +89,11 @@ public class Monitor
 		if( notTheFirstRecord() && record.crossedIntoNextDay(previousRecord))
 		{
 			day++;
-			aRecord = record.advanceFor(day);
 		}
 		
-		recordEntries.add(aRecord);
+		recordEntries.add(record.advanceFor(day));
 
-		switch (aRecord.getSensor())
+		switch (record.getSensor())
 		{
 		case A:
 			state.processSenorAEntry();

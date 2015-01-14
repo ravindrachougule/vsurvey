@@ -3,6 +3,8 @@ package com.bmc.traffic;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.bmc.traffic.reference.Direction;
+
 public class CarEntry
 {
 	Direction direction;

@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.bmc.traffic.reference.Direction;
+import com.bmc.traffic.reference.Sensor;
+
 public class CarEntryTest {
 
 

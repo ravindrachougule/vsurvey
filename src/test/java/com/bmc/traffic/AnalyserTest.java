@@ -9,6 +9,10 @@ import java.util.TreeSet;
 import org.junit.Test;
 
 import com.bmc.traffic.file.TrafficDataReader;
+import com.bmc.traffic.interval.Interval;
+import com.bmc.traffic.interval.IntervalFactory;
+import com.bmc.traffic.interval.TrafficInterval;
+import com.bmc.traffic.reference.Direction;
 
 public class AnalyserTest
 {
@@ -17,61 +21,43 @@ public class AnalyserTest
 	public void test() throws IOException
 	{
 		Monitor monitor = new Monitor();
-		
+
 		//given
 		List<Record> records = TrafficDataReader.read("sampleData.txt");
 		for (Record record: records){
 			monitor.process(record);
 		}
-		
+
 		//when
 		Analyser analyser = new Analyser(monitor.getCarEntries());
-		
+
 		//then
-		//A) Total Vehicle count in morning
-		System.out.println(" ------------------ ");
-		System.out.println(" Total Vehicle count in morning ");
+		//A) a)Total Vehicle count in morning
+		Interval interval;
+		Interval getOneDayInterval = analyser.printDailyCount(analyser);
+
+		//A) b) 20 min Interval
+		List<Interval>twentyMinInterval = getOneDayInterval.breakDown(IntervalFactory.twentyMinInterval);
+		assertFalse(twentyMinInterval.isEmpty());
 		
-		Interval morning = IntervalFactory.getMorning();
-		Interval interval = null;
-		for (int day=1;day<=5;day++)
-		{
-			interval = morning.advanceFor(day);
-			System.out.print(" NorthBound Day[" + day + "]= " + analyser.getCarEntries(interval,Direction.NorthBound).size());
-		}
-		
-		System.out.println();
-		for (int day=1;day<=5;day++)
-		{
-			interval = morning.advanceFor(day);
-			System.out.print(" SouthBound Day[" + day + "]= " + analyser.getCarEntries(interval,Direction.SouthBound).size());
-		
-		
-		}
-		System.out.println("\n \n");
-		
-		//B) Peak Volume
-		TreeSet<TrafficInterval> peakIntervals = analyser.getPeak(morning,IntervalFactory.hourInterval,Direction.NorthBound);
+		List<CarEntry> carEntriesInGivenTwentyMinutes = analyser.getCarEntries(twentyMinInterval.get(0),Direction.NorthBound);
+		assertTrue(carEntriesInGivenTwentyMinutes.size()>0);
+		System.out.println("carEntriesInGivenTwentyMinutes: ["+ twentyMinInterval.get(0) + "] =" +carEntriesInGivenTwentyMinutes.size() );
+
+		//B) Peak Volume in which Interval
+		TreeSet<TrafficInterval> peakIntervals = analyser.getPeak(getOneDayInterval,IntervalFactory.hourInterval,Direction.NorthBound);
 		System.out.println("Peak at =" + peakIntervals.iterator().next() );
-		
-		//C) Distance between cars
-		
+
+		//C) Distance between cars in given Morning
 		interval = IntervalFactory.getMorning();
 		float distanceInMeter = analyser.getAvgDistance(interval,Direction.NorthBound);
 		System.out.println("getAvgDistance (meters)= " + distanceInMeter );
 		assertTrue(distanceInMeter > 1);
-		
-		System.out.println(" ------------------ ");
-		
+
+
 	}
 
-	@Test
-	public void testTrafficInterval()
-	{
-		TrafficInterval intervalPeak = new TrafficInterval(new Interval(0, 1), 2);
-		TrafficInterval intervalFree = new TrafficInterval(new Interval(0, 1), 1);
-		assertTrue(intervalPeak.compareTo(intervalFree) < 0);
-		assertTrue(intervalFree.compareTo(intervalPeak) > 0);
-		assertTrue(intervalFree.compareTo(intervalFree) == 0);
-	}
+	
+
+
 }

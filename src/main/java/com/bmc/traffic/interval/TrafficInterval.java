@@ -1,4 +1,4 @@
-package com.bmc.traffic;
+package com.bmc.traffic.interval;
 
 public class TrafficInterval extends Interval implements Comparable<TrafficInterval> {
 

@@ -1,11 +1,13 @@
-package com.bmc.traffic;
+package com.bmc.traffic.monitorState;
+
+import com.bmc.traffic.Monitor;
 
 public class FrontAxelPassedBothSensorsState implements MonitorState
 {
 	public Monitor monitor;
 
 	
-	FrontAxelPassedBothSensorsState(Monitor monitor)
+	public FrontAxelPassedBothSensorsState(Monitor monitor)
 	{
 		this.monitor = monitor;
 	}

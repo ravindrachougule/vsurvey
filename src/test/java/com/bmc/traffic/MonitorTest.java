@@ -6,6 +6,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.bmc.traffic.interval.Interval;
+import com.bmc.traffic.interval.IntervalFactory;
+import com.bmc.traffic.reference.Direction;
+import com.bmc.traffic.reference.Sensor;
+
 public class MonitorTest
 {
 
@@ -14,18 +19,18 @@ public class MonitorTest
 	{
 		//Given
 		Monitor monitor = new Monitor();
-		Record recordAOne = new Record(Sensor.A,268981);
+		Record recordFirstSensorFrontAxel = new Record(Sensor.A,268981);
 		
 		//when
-		monitor.process(recordAOne);
+		monitor.process(recordFirstSensorFrontAxel);
 		
 		//then
 		List<CarEntry> carEntries = monitor.getCarEntries();
 		assertEquals("Should be empty",carEntries.size(),0);
 		
 		//when
-		Record recordAtwo = new Record(Sensor.A,269123);
-		monitor.process(recordAtwo);
+		Record recordFirstSenorRearAxel = new Record(Sensor.A,269123);
+		monitor.process(recordFirstSenorRearAxel);
 		
 		//then
 		assertEquals(carEntries.size(),1);
@@ -35,12 +40,12 @@ public class MonitorTest
 		assertEquals("Should be empty",monitor.getRecordEntries().size(),0);
 		
 		//given another car
-		recordAOne = new Record(Sensor.A,499718);
-		recordAtwo = new Record(Sensor.A,499886);
+		recordFirstSensorFrontAxel = new Record(Sensor.A,499718);
+		recordFirstSenorRearAxel = new Record(Sensor.A,499886);
 		
 		//when
-		monitor.process(recordAOne);
-		monitor.process(recordAtwo);
+		monitor.process(recordFirstSensorFrontAxel);
+		monitor.process(recordFirstSenorRearAxel);
 		Interval morning = IntervalFactory.getMorning();
 		Interval evening = IntervalFactory.getEvening();
 		
@@ -52,40 +57,40 @@ public class MonitorTest
 		
 		
 		//given we go into next day(Day 2).
-		recordAOne = new Record(Sensor.A,268981);
-		recordAtwo = new Record(Sensor.A,269123);
-		monitor.process(recordAOne);
-		monitor.process(recordAtwo);
+		recordFirstSensorFrontAxel = new Record(Sensor.A,268981);
+		recordFirstSenorRearAxel = new Record(Sensor.A,269123);
+		monitor.process(recordFirstSensorFrontAxel);
+		monitor.process(recordFirstSenorRearAxel);
+		
+		recordFirstSensorFrontAxel = new Record(Sensor.A,288981);
+		recordFirstSenorRearAxel = new Record(Sensor.A,289123);
+		monitor.process(recordFirstSensorFrontAxel);
+		monitor.process(recordFirstSenorRearAxel);
 		
 		//then pass next day interval
-		assertEquals(1,analyser.getCarEntries(morning.advanceFor(2),Direction.NorthBound).size());
+		assertEquals(2,analyser.getCarEntries(morning.advanceFor(2),Direction.NorthBound).size());
 		assertEquals(0,analyser.getCarEntries(morning.advanceFor(2),Direction.SouthBound).size());
 		assertEquals(0,analyser.getCarEntries(morning.advanceFor(2),Direction.SouthBound).size());
+		
+		//check second cars timing
+		assertEquals(recordFirstSensorFrontAxel.getTimestamp() + IntervalFactory.getOneDayInterval().getEndTime(),
+				analyser.getCarEntries(morning.advanceFor(2),Direction.NorthBound).get(1).recordEntries.get(0).getTimestamp());
 		
 		
 		//given we got to third day
-		recordAOne = new Record(Sensor.A,2);
-		recordAtwo = new Record(Sensor.A,124);
-		monitor.process(recordAOne);
-		monitor.process(recordAtwo);
+		recordFirstSensorFrontAxel = new Record(Sensor.A,2);
+		recordFirstSenorRearAxel = new Record(Sensor.A,124);
+		monitor.process(recordFirstSensorFrontAxel);
+		monitor.process(recordFirstSenorRearAxel);
 		//then pass next day interval
 		assertEquals(1,analyser.getCarEntries(morning.advanceFor(3),Direction.NorthBound).size());
 		assertEquals(0,analyser.getCarEntries(morning.advanceFor(3),Direction.SouthBound).size());
 		assertEquals(0,analyser.getCarEntries(morning.advanceFor(3),Direction.SouthBound).size());
 		
-		//test Analyser out put
-		List<Interval>twentyMinInterval = morning.breakDown(IntervalFactory.twentyMinInterval);
+		assertEquals(recordFirstSensorFrontAxel.getTimestamp() + IntervalFactory.getOneDayInterval().getEndTime() *2,
+				analyser.getCarEntries(morning.advanceFor(3),Direction.NorthBound).get(0).recordEntries.get(0).getTimestamp());
 		
-		for (Interval interval : twentyMinInterval){
-			carEntries = analyser.getCarEntries(interval,Direction.NorthBound);
-			if (!carEntries.isEmpty())
-			System.out.println("interval: " + interval + " : [" + carEntries.size()  + "]"+carEntries  + " : " + Direction.NorthBound);
-			
-			carEntries = analyser.getCarEntries(interval,Direction.SouthBound);
-			if (!carEntries.isEmpty())
-			System.out.println("interval: " + interval + " : [" + carEntries.size()  + "]"+carEntries  + " : " + Direction.SouthBound);
-			
-		}
+		analyser.printDailyCount(analyser);
 	}
 
 
@@ -94,24 +99,24 @@ public class MonitorTest
 	{
 		//Given
 		Monitor monitor = new Monitor();
-		Record recordAOne = new Record(Sensor.A,604957);
+		Record recordFirstSensorFrontAxel = new Record(Sensor.A,604957);
 		
 		//when
-		monitor.process(recordAOne);
+		monitor.process(recordFirstSensorFrontAxel);
 		
 		//then
 		List<CarEntry> carEntries = monitor.getCarEntries();
 		assertEquals("Should be empty",carEntries.size(),0);
 		
 		//when
-		Record recordBOne = new Record(Sensor.B,604960);
-		monitor.process(recordBOne);
+		Record recordSecondSensorRearAxel = new Record(Sensor.B,604960);
+		monitor.process(recordSecondSensorRearAxel);
 		
-		Record recordATwo = new Record(Sensor.A,605128);
-		monitor.process(recordATwo);
+		Record recordFirstSensorRearAxel = new Record(Sensor.A,605128);
+		monitor.process(recordFirstSensorRearAxel);
 		
-		Record recordBTwo = new Record(Sensor.B,605132);
-		monitor.process(recordBTwo);
+		Record recordSecondSensorRealAxel = new Record(Sensor.B,605132);
+		monitor.process(recordSecondSensorRealAxel);
 		
 		//then
 		assertEquals("Should be empty",carEntries.size(),1);

@@ -1,4 +1,4 @@
-package com.bmc.traffic;
+package com.bmc.traffic.reference;
 
 public enum Sensor
 {

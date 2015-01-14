@@ -1,11 +1,14 @@
-package com.bmc.traffic;
+package com.bmc.traffic.monitorState;
+
+import com.bmc.traffic.Monitor;
+import com.bmc.traffic.reference.Direction;
 
 public class RearAxelPassedFirstSensorState implements MonitorState
 {
 	public Monitor monitor;
 
 	
-	RearAxelPassedFirstSensorState(Monitor monitor)
+	public RearAxelPassedFirstSensorState(Monitor monitor)
 	{
 		this.monitor = monitor;
 	}

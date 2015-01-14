@@ -1,12 +1,16 @@
-package com.bmc.traffic;
+package com.bmc.traffic.interval;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+
+import com.bmc.traffic.interval.Interval;
+import com.bmc.traffic.interval.IntervalFactory;
+import com.bmc.traffic.interval.TrafficInterval;
 
 public class IntervalTest {
 
@@ -30,17 +34,15 @@ public class IntervalTest {
 
 	}
 
-
-
 	@Test
 	public void testWeekDayInterval()
 	{
 		Interval dayOneMorning = IntervalFactory.getMorning();
 		Interval dayTwoMorning = IntervalFactory.getMorning().advanceFor(2);
-		assertEquals(dayOneMorning.getEndTime()+IntervalFactory.getOneDayInterval(),dayTwoMorning.getEndTime());
+		assertEquals(dayOneMorning.getEndTime()+IntervalFactory.getOneDayInterval().getEndTime(),dayTwoMorning.getEndTime());
 
 		Interval day4Morning = IntervalFactory.getMorning().advanceFor(4);
-		assertEquals(IntervalFactory.getOneDayInterval()*3, day4Morning.getStartTime()- dayOneMorning.getStartTime());
+		assertEquals(IntervalFactory.getOneDayInterval().getEndTime()*3, day4Morning.getStartTime()- dayOneMorning.getStartTime());
 	}
 
 	@Test
@@ -75,6 +77,15 @@ public class IntervalTest {
 		assertFalse(twentyMinInterval.get(0).contains(IntervalFactory.twentyMinInterval+1));
 		assertTrue(twentyMinInterval.get(1).contains(IntervalFactory.twentyMinInterval+1));
 		
-		
+	}
+	
+	@Test
+	public void testTrafficInterval()
+	{
+		TrafficInterval intervalPeak = new TrafficInterval(new Interval(0, 1), 2);
+		TrafficInterval intervalFree = new TrafficInterval(new Interval(0, 1), 1);
+		assertTrue(intervalPeak.compareTo(intervalFree) < 0);
+		assertTrue(intervalFree.compareTo(intervalPeak) > 0);
+		assertTrue(intervalFree.compareTo(intervalFree) == 0);
 	}
 }

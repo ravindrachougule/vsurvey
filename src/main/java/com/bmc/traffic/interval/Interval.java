@@ -1,4 +1,4 @@
-package com.bmc.traffic;
+package com.bmc.traffic.interval;
 
 import java.sql.Date;
 import java.util.ArrayList;

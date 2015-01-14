@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bmc.traffic.Record;
-import com.bmc.traffic.Sensor;
+import com.bmc.traffic.reference.Sensor;
 
 public class TrafficDataReader
 {

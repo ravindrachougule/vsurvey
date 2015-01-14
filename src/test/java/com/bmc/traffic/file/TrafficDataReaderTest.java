@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.bmc.traffic.Record;
-import com.bmc.traffic.Sensor;
+import com.bmc.traffic.reference.Sensor;
 
 public class TrafficDataReaderTest
 {

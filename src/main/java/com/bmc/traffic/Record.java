@@ -1,5 +1,8 @@
 package com.bmc.traffic;
 
+import com.bmc.traffic.interval.IntervalFactory;
+import com.bmc.traffic.reference.Sensor;
+
 public class Record
 {
 	private Sensor sensor;
