@@ -57,7 +57,7 @@ public class Interval {
 	@Override
 	public String toString()
 	{
-		return "Interval [startTime=" + startTime + ", endTime=" + endTime + "]";
+		return "Interval [startTime (ms)=" + startTime + ", endTime (ms)=" + endTime + "]";
 	}
 	
 	

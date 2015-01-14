@@ -42,7 +42,7 @@ public class AnalyserTest
 		
 		List<CarEntry> carEntriesInGivenTwentyMinutes = analyser.getCarEntries(twentyMinInterval.get(0),Direction.NorthBound);
 		assertTrue(carEntriesInGivenTwentyMinutes.size()>0);
-		System.out.println("carEntriesInGivenTwentyMinutes: ["+ twentyMinInterval.get(0) + "] =" +carEntriesInGivenTwentyMinutes.size() );
+		System.out.println("Car EntriesInGivenTwentyMinutes: ["+ twentyMinInterval.get(0) + "] =" +carEntriesInGivenTwentyMinutes.size() );
 
 		//B) Peak Volume in which Interval
 		TreeSet<TrafficInterval> peakIntervals = analyser.getPeak(getOneDayInterval,IntervalFactory.hourInterval,Direction.NorthBound);

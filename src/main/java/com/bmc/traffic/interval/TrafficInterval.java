@@ -25,7 +25,7 @@ public class TrafficInterval extends Interval implements Comparable<TrafficInter
 	@Override
 	public String toString() {
 		return "TrafficInterval [vehicleCount=" + vehicleCount
-				+ ", getEndTime()=" + getEndTime() + ", getStartTime()="
+				+ ", getEndTime (ms)=" + getEndTime() + ", getStartTime(ms)="
 				+ getStartTime() + "]";
 	}
 
